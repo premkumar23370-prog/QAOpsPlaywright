@@ -1,0 +1,27 @@
+{
+  "name": "playwrightautomation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test tests/routefakeresponsebody.spec.js",
+    "Regression": "npx playwright test",
+    "Smoke": "npx playwright test --grep @Smoke"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@azure/identity": "^4.13.2",
+    "@azure/playwright": "^1.1.6",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
+    "allure-commandline": "^2.43.0",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "allure-playwright": "^3.10.2",
+    "exceljs": "^4.4.0"
+  }
+}

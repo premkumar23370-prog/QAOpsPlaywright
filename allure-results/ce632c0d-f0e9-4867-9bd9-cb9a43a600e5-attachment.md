@@ -1,0 +1,72 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: playwrightpractice.spec.js >> api
+- Location: tests\playwrightpractice.spec.js:34:6
+
+# Error details
+
+```
+ReferenceError: page is not defined
+```
+
+# Test source
+
+```ts
+  1  | const {test,request,expect}=require('@playwright/test');
+  2  | const loginPayload = { userEmail: "premkumar814@gmail.com", userPassword: "Premkumar@33" };
+  3  | 
+  4  | test('Practice',async({page})=>{
+  5  | await page.goto("https://testautomationpractice.blogspot.com/");
+  6  | await page.getByPlaceholder("Enter Name").fill("Premkumar");
+  7  | await Promise.all([
+  8  | 
+  9  | page.waitForResponse(Response=>
+  10 | Response.url().includes('playwrightpractice.html')&&
+  11 | Response.status()==200
+  12 | ),
+  13 | await page.getByRole('link',{name:'PlaywrightPractice'}).click()
+  14 | ]);
+  15 | await expect(page.locator("div.card p strong")).toContainText('important');
+  16 | const str=await page.locator("div.card p").nth(0).textContent();
+  17 | console.log(str);
+  18 | 
+  19 | const arr1=await str.split("contains");
+  20 | console.log(arr1);
+  21 | const arr2=arr1[1].split(" ")[2];
+  22 | console.log(arr2);
+  23 | 
+  24 | page.on('dialog',async dialog=>{
+  25 |     console.log(await dialog.message());
+  26 |     await dialog.accept();
+  27 | });
+  28 | await page.locator('#alertBtn').first().click();
+  29 | 
+  30 | 
+  31 | 
+  32 | });
+  33 | 
+  34 | test.only('api',async({request})=>{
+  35 |    // const ApiContext=await request.newContext();
+  36 |     const res=await request.post('https://rahulshettyacademy.com/api/ecom/auth/login',{
+  37 |         data : loginPayload
+  38 |     })
+  39 |     const resjson=await res.json();
+  40 |     const token=resjson.token;
+  41 |     console.log(token);
+  42 | 
+> 43 |     await page.addInitScript(value=>{
+     |     ^ ReferenceError: page is not defined
+  44 |          window.localStorage.setItem('token',value)
+  45 |     },token);
+  46 | 
+  47 |     await page.goto('https://rahulshettyacademy.com/client/');
+  48 | 
+  49 | 
+  50 | })
+```

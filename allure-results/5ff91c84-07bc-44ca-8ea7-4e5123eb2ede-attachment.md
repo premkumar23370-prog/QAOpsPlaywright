@@ -1,0 +1,109 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: UIbasic.spec.js >> Login >> Designer
+- Location: tests\UIbasic.spec.js:19:1
+
+# Error details
+
+```
+Error: locator.click: Target page, context or browser has been closed
+Call log:
+  - waiting for locator('#cs_switchmenu')
+
+```
+
+# Test source
+
+```ts
+  1  | const {test, expect}= require('@playwright/test');
+  2  | const {loginFix1}=require('../Utils/fixture');
+  3  | //const { use } = require('react');
+  4  | test.describe.only('Login',()=>{
+  5  | test('First playwright',async({browser})=>
+  6  | {
+  7  |     const context=await browser.newContext();
+  8  |     const page=await context.newPage();
+  9  |     await page.goto("https://release.chainsys.com/appplatform/core/userlogin/launch");
+  10 |     await page.locator('input#userName').fill('preedewmdevqa');
+  11 |      await page.locator('input#password').fill('Welcomewewe#2');
+  12 |      await page.locator('xpath=(//*[@title="Login"])[1]').click();
+  13 |      
+  14 |      console.log(await page.locator('xpath=//*[@id="invalidMsg"]').textContent());
+  15 |       await expect(page.locator('xpath=//*[@id="invalidMsg"]')).toContainText('Invalid Username Or Password.');
+  16 |     
+  17 | });
+  18 | 
+  19 | loginFix1('Designer',async({loginRelQA,page})=>{
+> 20 |     await page.locator('#cs_switchmenu').click();
+     |                                          ^ Error: locator.click: Target page, context or browser has been closed
+  21 |     await page.pause();
+  22 | 
+  23 | })
+  24 | 
+  25 | });
+  26 | test('page',async({page})=>
+  27 | {
+  28 | await page.goto("https://google.com")
+  29 | console.log(await page.title());
+  30 | await expect(page).toHaveTitle('Google');
+  31 | }); 
+  32 | 
+  33 | test('Login page',async({browser,page})=>
+  34 | {
+  35 |     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
+  36 |    /* const email=await page.locator('input#userEmail');
+  37 |     const pass=await page.locator('input#userPassword')
+  38 |     await page.locator('.text-reset').click();
+  39 |     await page.locator('input#firstName').fill("Prem");
+  40 |     await page.locator('input#lastName').fill("kumar");
+  41 |     await email.fill("premkumar814@gmail.com");
+  42 |     await page.locator('input#userMobile').fill("7010041536");
+  43 |     await pass.fill("Premkumar@33");
+  44 |     await page.locator('input#confirmPassword').fill("Premkumar@33");
+  45 |     console.log(await page.locator('xpath=//*[text()=" I am 18 year or Older "]').textContent());
+  46 |     await page.locator("[type='checkbox']").click();
+  47 |     await page.locator('input#login').click();
+  48 |     await page.locator('xpath=//*[text()="Login"]').click();
+  49 |     console.log(await page.locator('xpath=//*[text()="Forgot password?"]').textContent());*/
+  50 |     await page.locator('input#userEmail').fill("premkumar814@gmail.com");
+  51 |     await page.locator('input#userPassword').fill("Premkumar@33");
+  52 |     await page.locator('input#login').click();
+  53 |     //console.log(await page.locator['//*[text()="*Email is required"]'].textContent());
+  54 |     //console.log(await page.locator('xpath=//*[text()="ADIDAS ORIGINAL"]').textContent());
+  55 |    
+  56 |     const prod =await page.locator("div.card");
+  57 |     //await prod.first().waitFor();
+  58 |     const count=await prod.count();
+  59 |     console.log(count);
+  60 |     for(let i=0; i<=count; i++){
+  61 |         console.log(await prod.nth(i).locator("b").textContent());
+  62 |         if(await prod.nth(i).locator("b").textContent()==='ZARA COAT 3'){
+  63 |             console.log(i); 
+  64 |             await prod.nth(i).locator('text= Add To Cart').click();
+  65 |              //await page.pause();
+  66 |             break;
+  67 |           
+  68 | 
+  69 |         }
+  70 | 
+  71 |     
+  72 |        }
+  73 | 
+  74 |        
+  75 | 
+  76 |  
+  77 | 
+  78 | 
+  79 | 
+  80 | 
+  81 | 
+  82 |      
+  83 | 
+  84 | });
+```

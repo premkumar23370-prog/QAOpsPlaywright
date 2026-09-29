@@ -1,0 +1,240 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: playwrightpractice.spec.js >> upload download case
+- Location: tests\playwrightpractice.spec.js:69:6
+
+# Error details
+
+```
+ReferenceError: Cannot access 'workbook' before initialization
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - 'heading "RAHUL SHETTY ACADEMY PRACTISE Note: Data will be reset after page refresh." [level=1] [ref=e6]':
+      - text: RAHUL SHETTY ACADEMY PRACTISE
+      - generic [ref=e7]: "Note: Data will be reset after page refresh."
+  - generic [ref=e8]:
+    - table [ref=e11]:
+      - rowgroup [ref=e12]:
+        - row "S No ▲ Fruit Name ▲ Color ▲ Price ▲ Season ▲" [ref=e13]:
+          - columnheader "S No ▲" [ref=e15] [cursor=pointer]:
+            - generic [ref=e16]: S No
+            - generic [ref=e17]: ▲
+          - columnheader "Fruit Name ▲" [ref=e19] [cursor=pointer]:
+            - generic [ref=e20]: Fruit Name
+            - generic [ref=e21]: ▲
+          - columnheader "Color ▲" [ref=e23] [cursor=pointer]:
+            - generic [ref=e24]: Color
+            - generic [ref=e25]: ▲
+          - columnheader "Price ▲" [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: Price
+            - generic [ref=e29]: ▲
+          - columnheader "Season ▲" [ref=e31] [cursor=pointer]:
+            - generic [ref=e32]: Season
+            - generic [ref=e33]: ▲
+      - rowgroup [ref=e34]:
+        - row "1 Mango Yellow 299 Summer" [ref=e35]:
+          - cell "1" [ref=e36]:
+            - generic [ref=e37]: "1"
+          - cell "Mango" [ref=e38]:
+            - generic [ref=e39]: Mango
+          - cell "Yellow" [ref=e40]:
+            - generic [ref=e41]: Yellow
+          - cell "299" [ref=e42]:
+            - generic [ref=e43]: "299"
+          - cell "Summer" [ref=e44]:
+            - generic [ref=e45]: Summer
+        - row "2 Apple Red 345 Winter" [ref=e46]:
+          - cell "2" [ref=e47]:
+            - generic [ref=e48]: "2"
+          - cell "Apple" [ref=e49]:
+            - generic [ref=e50]: Apple
+          - cell "Red" [ref=e51]:
+            - generic [ref=e52]: Red
+          - cell "345" [ref=e53]:
+            - generic [ref=e54]: "345"
+          - cell "Winter" [ref=e55]:
+            - generic [ref=e56]: Winter
+        - row "3 Papaya Orange 187 Spring" [ref=e57]:
+          - cell "3" [ref=e58]:
+            - generic [ref=e59]: "3"
+          - cell "Papaya" [ref=e60]:
+            - generic [ref=e61]: Papaya
+          - cell "Orange" [ref=e62]:
+            - generic [ref=e63]: Orange
+          - cell "187" [ref=e64]:
+            - generic [ref=e65]: "187"
+          - cell "Spring" [ref=e66]:
+            - generic [ref=e67]: Spring
+        - row "4 Banana Yellow 69 All" [ref=e68]:
+          - cell "4" [ref=e69]:
+            - generic [ref=e70]: "4"
+          - cell "Banana" [ref=e71]:
+            - generic [ref=e72]: Banana
+          - cell "Yellow" [ref=e73]:
+            - generic [ref=e74]: Yellow
+          - cell "69" [ref=e75]:
+            - generic [ref=e76]: "69"
+          - cell "All" [ref=e77]:
+            - generic [ref=e78]: All
+        - row "5 Kivi Green 399 Winter" [ref=e79]:
+          - cell "5" [ref=e80]:
+            - generic [ref=e81]: "5"
+          - cell "Kivi" [ref=e82]:
+            - generic [ref=e83]: Kivi
+          - cell "Green" [ref=e84]:
+            - generic [ref=e85]: Green
+          - cell "399" [ref=e86]:
+            - generic [ref=e87]: "399"
+          - cell "Winter" [ref=e88]:
+            - generic [ref=e89]: Winter
+        - row "6 Orange Orange 199 Summer" [ref=e90]:
+          - cell "6" [ref=e91]:
+            - generic [ref=e92]: "6"
+          - cell "Orange" [ref=e93]:
+            - generic [ref=e94]: Orange
+          - cell "Orange" [ref=e95]:
+            - generic [ref=e96]: Orange
+          - cell "199" [ref=e97]:
+            - generic [ref=e98]: "199"
+          - cell "Summer" [ref=e99]:
+            - generic [ref=e100]: Summer
+    - navigation [ref=e102]:
+      - generic [ref=e103]: "Rows per page:"
+      - generic [ref=e104]:
+        - combobox "Rows per page:" [ref=e105] [cursor=pointer]:
+          - option "10" [selected]
+          - option "15"
+          - option "20"
+          - option "25"
+          - option "30"
+        - img
+      - generic [ref=e106]: 1-6 of 6
+      - generic [ref=e107]:
+        - button "First Page" [disabled] [ref=e108]:
+          - img [ref=e109]
+        - button "Previous Page" [disabled] [ref=e112]:
+          - img [ref=e113]
+        - button "Next Page" [disabled] [ref=e116]:
+          - img [ref=e117]
+        - button "Last Page" [disabled] [ref=e120]:
+          - img [ref=e121]
+  - generic [ref=e125]:
+    - button "Download" [active] [ref=e126] [cursor=pointer]
+    - button "Choose File" [ref=e127]
+```
+
+# Test source
+
+```ts
+  1  | const {test,request,expect}=require('@playwright/test');
+  2  | const Exceljs=require('exceljs');
+  3  | const { promises } = require('node:dns');
+  4  | const loginPayload = { userEmail: "premkumar814@gmail.com", userPassword: "Premkumar@33" };
+  5  | const FakeData={data:[],message:"No Orders"};
+  6  | 
+  7  | test('Practice',async({page})=>{
+  8  | await page.goto("https://testautomationpractice.blogspot.com/");
+  9  | await page.getByPlaceholder("Enter Name").fill("Premkumar");
+  10 | await Promise.all([
+  11 | 
+  12 | page.waitForResponse(Response=>
+  13 | Response.url().includes('playwrightpractice.html')&&
+  14 | Response.status()==200
+  15 | ),
+  16 | await page.getByRole('link',{name:'PlaywrightPractice'}).click()
+  17 | ]);
+  18 | await expect(page.locator("div.card p strong")).toContainText('important');
+  19 | const str=await page.locator("div.card p").nth(0).textContent();
+  20 | console.log(str);
+  21 | 
+  22 | const arr1=await str.split("contains");
+  23 | console.log(arr1);
+  24 | const arr2=arr1[1].split(" ")[2];
+  25 | console.log(arr2);
+  26 | 
+  27 | page.on('dialog',async dialog=>{
+  28 |     console.log(await dialog.message());
+  29 |     await dialog.accept();
+  30 | });
+  31 | await page.locator('#alertBtn').first().click();
+  32 | 
+  33 | 
+  34 | 
+  35 | });
+  36 | 
+  37 | test('api',async({request,page})=>{
+  38 |    // const ApiContext=await request.newContext();
+  39 |     const res=await request.post('https://rahulshettyacademy.com/api/ecom/auth/login',{
+  40 |         data : loginPayload
+  41 |     })
+  42 |     const resjson=await res.json();
+  43 |     const token=resjson.token;
+  44 |     
+  45 | 
+  46 |     await page.addInitScript(value=>{
+  47 |          window.localStorage.setItem('token',value)
+  48 |     },token);
+  49 | 
+  50 |     await page.goto('https://rahulshettyacademy.com/client/');
+  51 |     await Promise.all([
+  52 |      
+  53 |      page.route('https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*',async(route)=>{
+  54 |         route.fulfill({
+  55 |             status:200,
+  56 |             contentType:'application/json',
+  57 |             body: JSON.stringify(FakeData)
+  58 | 
+  59 |     })
+  60 |     }),
+  61 |     page.getByRole('button',{name:'  ORDERS'}).click(),
+  62 | ]);
+  63 |     
+  64 |    
+  65 |     await expect(page.locator('.ng-star-inserted').nth(1)).toHaveText(' You have No Orders to show at this time. Please Visit Back Us');
+  66 | 
+  67 | })
+  68 | 
+  69 | test.only('upload download case',async({page})=>{
+  70 | 
+  71 |     await page.goto('https://rahulshettyacademy.com/upload-download-test/index.html')
+  72 |     const download= page.waitForEvent('download');
+  73 |     
+  74 |          await page.getByRole('button',{name:'download'}).click();
+  75 |          const d1=await download;
+  76 |          await d1.saveAs('C:/Users/ASUS/Downloads/download.xlsx');
+> 77 |          const workbook=new Exceljs(workbook);
+     |                                     ^ ReferenceError: Cannot access 'workbook' before initialization
+  78 |          await workbook.xlsx.readFile('C:/Users/ASUS/Downloads/download.xlsx');
+  79 |          const worksheet=workbook.getWorkSheet('Sheet1');
+  80 |          worksheet.eachRow((row,rowNumber)=>{
+  81 |             row.eachCell((cell,colNumber)=>{
+  82 |                 if(cell.value=='Mango'){
+  83 |                     cell.value=='Dragon';
+  84 |                 }
+  85 |             })
+  86 | 
+  87 |          })
+  88 |          
+  89 | 
+  90 | 
+  91 | 
+  92 | 
+  93 |         
+  94 |        
+  95 | 
+  96 |         
+  97 |     
+  98 | 
+  99 | });
+```

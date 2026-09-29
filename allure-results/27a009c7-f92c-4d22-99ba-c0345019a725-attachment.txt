@@ -1,0 +1,13 @@
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzMDcwLCJlbWFpbCI6InByZW1AeWFob28uY29tIiwiaWF0IjoxNzg1MTYwMzQ0LCJleHAiOjE3ODU3NjUxNDR9.JuaHRbKQ2TwLINNq-4if3loQrupZAds7hajLkaJFWIE
+2
+APIResponse: 400 Bad Request
+  Date: Mon, 27 Jul 2026 13:52:25 GMT
+  Server: Apache/2.4.52 (Ubuntu)
+  X-Powered-By: Express
+  Access-Control-Allow-Origin: https://eventhub.rahulshettyacademy.com
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 69
+  ETag: W/"45-yh042aYSB7nedlX4HU/Sz9xVRtw"
+  Connection: close

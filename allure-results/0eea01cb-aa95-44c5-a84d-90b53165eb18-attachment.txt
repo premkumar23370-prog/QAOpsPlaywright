@@ -1,0 +1,7 @@
+This paragraph contains some important text that you might want to locate.
+[
+  'This paragraph ',
+  ' some important text that you might want to locate.'
+]
+important
+I am an alert box!

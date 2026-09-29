@@ -1,0 +1,222 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: UIbasic.spec.js >> Login >> Designer
+- Location: tests\UIbasic.spec.js:20:11
+
+# Error details
+
+```
+Test timeout of 90000ms exceeded.
+```
+
+```
+Error: page.waitForResponse: Test timeout of 90000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e4]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - button "" [ref=e9] [cursor=pointer]:
+          - emphasis [ref=e10]: 
+        - img "App Logo" [ref=e11]
+      - paragraph [ref=e13]: Affiliate
+    - generic [ref=e16]:
+      - button "UserImg Org Logo" [ref=e17]:
+        - emphasis [ref=e18] [cursor=pointer]:
+          - img "UserImg" [ref=e23]
+        - img "Org Logo" [ref=e25]
+      - generic [ref=e26] [cursor=pointer]:
+        - img "notification-img" [ref=e27]
+        - generic [ref=e28]: "1"
+      - img "switcher-img" [ref=e30] [cursor=pointer]
+      - generic [ref=e31] [cursor=pointer]:
+        - img "View Runtime Exceptions" [ref=e32]
+        - generic [ref=e33]: "1"
+  - generic [ref=e39]:
+    - text: 
+    - generic [ref=e40]:
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - text: 
+          - generic [ref=e43]: mleaffiliatelist
+        - button " Save" [active] [ref=e45]:
+          - generic [ref=e46]:
+            - emphasis [ref=e47]: 
+            - generic [ref=e48]: Save
+            - generic [ref=e49]:
+              - emphasis
+      - img "dataloading.gif" [ref=e54]
+      - generic [ref=e55]:
+        - generic [ref=e58]:
+          - generic [ref=e60]:
+            - generic [ref=e62]: Affiliate
+            - emphasis [ref=e64]: 
+          - generic [ref=e65]:
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - generic [ref=e68]: SNo
+                - textbox [ref=e69]
+              - generic [ref=e70]:
+                - generic [ref=e71]: Name
+                - textbox [ref=e72]: affiliate0
+              - generic [ref=e73]:
+                - generic [ref=e74]: Registration Number
+                - textbox [ref=e75]: "1"
+            - generic [ref=e76]:
+              - generic [ref=e77]:
+                - generic [ref=e78]: Autority
+                - radiogroup [ref=e80]:
+                  - generic [ref=e82]:
+                    - radio "RTO" [checked] [ref=e85] [cursor=pointer]
+                    - generic [ref=e89] [cursor=pointer]: RTO
+                  - generic [ref=e91]:
+                    - radio "DO" [ref=e94] [cursor=pointer]
+                    - generic [ref=e97] [cursor=pointer]: DO
+              - generic [ref=e98]:
+                - generic [ref=e99]:
+                  - text: RTO
+                  - generic [ref=e100]: "*"
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - textbox [ref=e101]: "1"
+                        - text: 
+              - generic [ref=e102]:
+                - generic [ref=e103]: Address
+                - textbox [ref=e104]
+        - generic [ref=e106]:
+          - generic:
+            - generic:                 
+  - text: 
+```
+
+# Test source
+
+```ts
+  1   | const {test, expect}= require('@playwright/test');
+  2   | const {loginFix1}=require('../Utils/fixture');
+  3   | const {RelPOManager}=require('../Object module/RelPOManager')
+  4   | //const { use } = require('react');
+  5   | test.describe.only('Login',()=>{
+  6   | test('First playwright',async({browser})=>
+  7   | {
+  8   |     const context=await browser.newContext();
+  9   |     const page=await context.newPage();
+  10  |     await page.goto("https://release.chainsys.com/appplatform/core/userlogin/launch");
+  11  |     await page.locator('input#userName').fill('preedewmdevqa');
+  12  |      await page.locator('input#password').fill('Welcomewewe#2');
+  13  |      await page.locator('xpath=(//*[@title="Login"])[1]').click();
+  14  |      
+  15  |      console.log(await page.locator('xpath=//*[@id="invalidMsg"]').textContent());
+  16  |       await expect(page.locator('xpath=//*[@id="invalidMsg"]')).toContainText('Invalid Username Or Password.');
+  17  |     
+  18  | });
+  19  | 
+  20  | loginFix1.only('Designer',async({loginRelQA,page})=>{
+  21  |     let appname='Affiliate';
+  22  |     
+  23  |     await expect(page).toHaveTitle('Chainsys Platform');
+  24  |     
+  25  |     const RelPOManager2=new RelPOManager(page,appname)
+  26  |     const Designer=RelPOManager2.designerFunction();
+  27  |     await page.waitForLoadState('load');
+  28  |     await Designer.designerAppSearch();
+  29  |     //await page.waitForTimeout(5000);
+  30  |    
+  31  |     
+  32  |     
+  33  |     
+  34  |   Promise.all([
+  35  |     await page.waitForTimeout(10000),
+  36  |     page.waitForSelector("#app-menu"),
+  37  |     page.locator("#app-menu").click(),])
+  38  |     await expect(page.locator("#MG_Affiliate_side_menu")).toBeVisible();
+  39  |     await page.locator('#MG_Affiliate_side_menu').getByText('Affiliate').click();
+  40  |     await page.locator('#MI_Affiliate_affiliatelist').click();
+  41  |     await page.waitForLoadState('load');
+  42  |     await page.locator('#affiliatelist_WEB_Grid_with_List_New_1').click();
+  43  |     let count=0;
+  44  |     let affiliatecount=`affiliate${count}`;
+  45  |     await page.locator('//*[@id="FLD_mleaffiliatelist_WEB_Grid_with_List_affiliatelist_DUMMY$$name_input"]').fill(affiliatecount);
+  46  |     count++;
+  47  |     
+  48  |     await page.locator('//*[@id="FLD_mleaffiliatelist_WEB_Grid_with_List_affiliatelist_DUMMY$$registrationnumber_input"]').fill(String(count));
+  49  |     await expect(page.locator('mat-card-title').filter({hasText:' affliatelist '}).nth(0)).toBeVisible();
+  50  |     await page.locator('//*[@id="FLD_mleaffiliatelist_WEB_Grid_with_List_affiliatelist_DUMMY$$autority_input_rto-input"]').click({timeout:5000});
+  51  |      
+  52  |     await expect(page.locator('span').filter({hasText:'*'}).nth(0)).toBeVisible();
+  53  |      await expect(page.locator('mat-label').filter({hasText:'RTO'}).nth(0)).toBeVisible();
+  54  |      await expect(page.locator('mat-card-title').filter({hasText:' affliatelist '}).nth(0)).toBeHidden();
+  55  |      await page.locator('//*[@id="FLD_mleaffiliatelist_WEB_Grid_with_List_affiliatelist_DUMMY$$rto_input"]').dblclick();
+  56  |  await page.waitForTimeout(500);
+  57  |      const rtonumbers=await page.locator('[id^="r"][id*="mleaffiliatelist_WEB_Grid_with_List_weblookup_rtodetails_DUMMY$$rtonumber"]').allTextContents();
+  58  |     
+  59  |      await expect(rtonumbers.length).toBeGreaterThan(0);
+  60  |      for(const rtonumber of rtonumbers){
+  61  |       await expect.soft(rtonumber).toContain("100");
+  62  |      }
+  63  | 
+  64  |     await page.locator('//*[@id="r0_mleaffiliatelist_WEB_Grid_with_List_weblookup_rtodetails_DUMMY$$rtoname"]').click();
+  65  |     await page.locator('#mleaffiliatelist_WEB_Grid_with_List_Save_1').click();
+> 66  |     await page.waitForResponse(response =>
+      |                ^ Error: page.waitForResponse: Test timeout of 90000ms exceeded.
+  67  |         response.url().includes('saveWithValidation') &&
+  68  |         response.status() === 200);
+  69  |         await page.locator("#app-menu").click();
+  70  |         await page.locator('#MG_Affiliate_side_menu').getByText('Affiliate').click();
+  71  |     await page.locator('#MI_Affiliate_affiliatelist').click();
+  72  |     const searchFilter= page.locator('#cspfm_affiliatelist_slickgrid_searchbtn');
+  73  |     await searchFilter.waitFor({state:'visible'});
+  74  |     await searchFilter.click();
+  75  |     await page.locator('#cspfm_slickgrid_affiliatelist_affiliatelist_WEB_Grid_with_List_filter-name-input').pressSequentially(affiliatecount);
+  76  |     await page.locator('[id="r0_affiliatelist_WEB_Grid_with_List_affiliatelist_DUMMY$$rto"]').click();
+  77  |     await page.waitForTimeout(700);
+  78  |     const listRownumbers=page.locator('[id^="r"][id*="affiliatelist_WEB_Grid_with_List_weblookup_rtodetails_DUMMY$$rtonumber"]').allTextContents();
+  79  |     await expect(listRownumbers.length).toBeGreaterThan(0);
+  80  |     for(const listRownumber of listRownumbers){
+  81  |       await expect.soft(listRownumber).toContain("100");
+  82  |     }
+  83  | 
+  84  | 
+  85  | 
+  86  | 
+  87  | 
+  88  |     //for(let i=1;i<=2;i++){
+  89  |    // await expect(page.locator('//button[@id="mleaffiliatelist_WEB_Grid_with_List_Add Line_1"]')).toBeVisible();
+  90  |     //await page.locator('//button[@id="mleaffiliatelist_WEB_Grid_with_List_Add Line_1"]').click();
+  91  |     //}
+  92  |     //await page.locator('//*[@id="r0_mleaffiliatelist_WEB_Grid_with_List_affiliatelist_DUMMY$$affliatelist_par$$name"]').pressSequentially("ind");
+  93  | 
+  94  | 
+  95  | 
+  96  | 
+  97  | 
+  98  | 
+  99  | 
+  100 |      
+  101 |     
+  102 |     //await page.locator("affiliatelist_WEB_Grid_with_List_New_1").click();
+  103 |     
+  104 | 
+  105 |     
+  106 | 
+  107 |    await page.pause();
+  108 | 
+  109 | })
+  110 | 
+  111 | });
+  112 | 
+  113 | 
+  114 | 
+```
